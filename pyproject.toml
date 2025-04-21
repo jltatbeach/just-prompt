@@ -15,6 +15,9 @@ dependencies = [
     "mcp>=0.1.5",
 ]
 
+[tool.ruff.lint]
+ignore = ["E712", "F841", "E402"]
+
 [project.scripts]
 just-prompt = "just_prompt.__main__:main"
 
@@ -28,8 +31,9 @@ test = [
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
-[tool.uv]
+[dependency-groups]
 dev-dependencies = [
+    "ruff>=0.11.6",
     "iniconfig==2.1.0",
     "packaging==25.0",
     "pluggy==1.5.0",
