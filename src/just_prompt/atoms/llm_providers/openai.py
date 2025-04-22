@@ -14,7 +14,6 @@ basic functionality (and our tests) still work.
 """
 
 import os
-import re
 import logging
 from typing import List, Tuple
 
@@ -23,8 +22,6 @@ from dotenv import load_dotenv
 # Third‑party import guarded so that static analysis still works when the SDK
 # is absent.
 from openai import OpenAI  # type: ignore
-import logging
-from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
@@ -45,6 +42,7 @@ _REASONING_LEVELS = {"low", "medium", "high"}
 
 
 # Public so that tests can import.
+
 
 def parse_reasoning_suffix(model: str) -> Tuple[str, str]:
     """Return (base_model, effort_level).
@@ -69,7 +67,9 @@ def parse_reasoning_suffix(model: str) -> Tuple[str, str]:
     return model, ""
 
 
-def _prompt_with_reasoning(text: str, model: str, effort: str) -> str:  # pragma: no cover – hits network
+def _prompt_with_reasoning(
+    text: str, model: str, effort: str
+) -> str:  # pragma: no cover – hits network
     """Call OpenAI *Responses* API with reasoning effort.
 
     Falls back transparently to chat completions if the installed SDK does not
@@ -170,7 +170,9 @@ def list_models() -> List[str]:
         return models
     except Exception as exc:
         # Networking errors shouldn't break the caller – return a minimal hard‑coded list.
-        logger.warning("Error listing OpenAI models via API (%s). Returning fallback list.", exc)
+        logger.warning(
+            "Error listing OpenAI models via API (%s). Returning fallback list.", exc
+        )
         return [
             "gpt-4o-mini",
             "o4-mini",

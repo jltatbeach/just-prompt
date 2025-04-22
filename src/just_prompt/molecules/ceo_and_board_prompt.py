@@ -42,7 +42,7 @@ def ceo_and_board_prompt(
     output_dir: str = ".",
     models_prefixed_by_provider: List[str] = None,
     ceo_model: str = DEFAULT_CEO_MODEL,
-    ceo_decision_prompt: str = DEFAULT_CEO_DECISION_PROMPT
+    ceo_decision_prompt: str = DEFAULT_CEO_DECISION_PROMPT,
 ) -> str:
     """
     Read text from a file, send it as prompt to multiple 'board member' models,
@@ -69,7 +69,7 @@ def ceo_and_board_prompt(
 
     # Get the original prompt from the file
     try:
-        with open(from_file, 'r', encoding='utf-8') as f:
+        with open(from_file, "r", encoding="utf-8") as f:
             original_prompt = f.read()
     except Exception as e:
         logger.error(f"Error reading file {from_file}: {e}")
@@ -77,9 +77,7 @@ def ceo_and_board_prompt(
 
     # Step 1: Get board members' responses
     board_response_files = prompt_from_file_to_file(
-        from_file,
-        models_prefixed_by_provider,
-        output_dir
+        from_file, models_prefixed_by_provider, output_dir
     )
 
     # Get the models that were actually used
@@ -93,7 +91,7 @@ def ceo_and_board_prompt(
     for i, file_path in enumerate(board_response_files):
         model_name = models_used[i].replace(":", "_")
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, "r", encoding="utf-8") as f:
                 response_content = f.read()
                 board_responses_text += f"""
 <board-response>
@@ -112,8 +110,7 @@ def ceo_and_board_prompt(
 
     # Step 3: Prepare the CEO decision prompt
     final_ceo_prompt = ceo_decision_prompt.format(
-        original_prompt=original_prompt,
-        board_responses=board_responses_text
+        original_prompt=original_prompt, board_responses=board_responses_text
     )
 
     # Step 4: Save the CEO prompt to a file
@@ -124,7 +121,7 @@ def ceo_and_board_prompt(
     except Exception as e:
         logger.error(f"Error writing CEO prompt to {ceo_prompt_file}: {e}")
         raise ValueError(f"Error writing CEO prompt: {str(e)}")
-    
+
     # Step 5: Get the CEO decision
     ceo_response = prompt(final_ceo_prompt, [ceo_model])[0]
 

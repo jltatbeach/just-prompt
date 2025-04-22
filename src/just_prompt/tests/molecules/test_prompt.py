@@ -10,6 +10,7 @@ from just_prompt.molecules.prompt import prompt
 # Load environment variables
 load_dotenv()
 
+
 def test_prompt_basic():
     """Test basic prompt functionality with a real API call."""
     # Define a simple test case
@@ -24,12 +25,13 @@ def test_prompt_basic():
     assert len(response) == 1
     assert "paris" in response[0].lower() or "Paris" in response[0]
 
+
 def test_prompt_multiple_models():
     """Test prompt with multiple models."""
     # Skip if API keys aren't available
     if not os.environ.get("OPENAI_API_KEY") or not os.environ.get("ANTHROPIC_API_KEY"):
         pytest.skip("Required API keys not available")
-        
+
     # Define a simple test case
     test_prompt = "What is the capital of France?"
     test_models = ["openai:gpt-4o-mini", "anthropic:claude-3-5-haiku-20241022"]

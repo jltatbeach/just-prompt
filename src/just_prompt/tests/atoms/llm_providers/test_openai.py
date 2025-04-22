@@ -18,12 +18,12 @@ if not os.environ.get("OPENAI_API_KEY"):
 def test_list_models():
     """Test listing OpenAI models."""
     models = openai.list_models()
-    
+
     # Assertions
     assert isinstance(models, list)
     assert len(models) > 0
     assert all(isinstance(model, str) for model in models)
-    
+
     # Check for at least one expected model
     gpt_models = [model for model in models if "gpt" in model.lower()]
     assert len(gpt_models) > 0, "No GPT models found"
@@ -50,13 +50,18 @@ def test_parse_reasoning_suffix():
     assert openai.parse_reasoning_suffix("o4-mini:low") == ("o4-mini", "low")
     assert openai.parse_reasoning_suffix("o4-mini:medium") == ("o4-mini", "medium")
     assert openai.parse_reasoning_suffix("o4-mini:high") == ("o4-mini", "high")
-    assert openai.parse_reasoning_suffix("o3-mini:LOW") == ("o3-mini", "low")  # case insensitive
+    assert openai.parse_reasoning_suffix("o3-mini:LOW") == (
+        "o3-mini",
+        "low",
+    )  # case insensitive
 
     # Unsupported model – suffix ignored
     assert openai.parse_reasoning_suffix("gpt-4o-mini:low") == ("gpt-4o-mini:low", "")
 
 
-@pytest.mark.parametrize("model_suffix", ["o4-mini:low", "o4-mini:medium", "o4-mini:high"])
+@pytest.mark.parametrize(
+    "model_suffix", ["o4-mini:low", "o4-mini:medium", "o4-mini:high"]
+)
 def test_prompt_with_reasoning(model_suffix):
     """Test sending prompt with reasoning effort enabled."""
 

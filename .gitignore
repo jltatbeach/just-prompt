@@ -63,4 +63,4 @@ dmypy.json
 prompts/responses
 .aider*
 
-focus_output/
+focus_output/.envrc

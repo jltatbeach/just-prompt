@@ -2,7 +2,6 @@
 Ollama provider implementation.
 """
 
-import os
 from typing import List
 import logging
 import ollama

@@ -21,14 +21,14 @@ def test_nonexistent_file():
 def test_file_read():
     """Test that the file is read correctly and processes with real API call."""
     # Create temporary file with a simple question
-    with tempfile.NamedTemporaryFile(mode='w+', delete=False) as temp:
+    with tempfile.NamedTemporaryFile(mode="w+", delete=False) as temp:
         temp.write("What is the capital of France?")
         temp_path = temp.name
-    
+
     try:
         # Make real API call
         response = prompt_from_file(temp_path, ["o:gpt-4o-mini"])
-        
+
         # Assertions
         assert isinstance(response, list)
         assert len(response) == 1

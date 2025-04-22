@@ -16,32 +16,31 @@ logger = logging.getLogger(__name__)
 
 # Initialize DeepSeek client with OpenAI-compatible interface
 client = OpenAI(
-    api_key=os.environ.get("DEEPSEEK_API_KEY"),
-    base_url="https://api.deepseek.com"
+    api_key=os.environ.get("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com"
 )
 
 
 def prompt(text: str, model: str) -> str:
     """
     Send a prompt to DeepSeek and get a response.
-    
+
     Args:
         text: The prompt text
         model: The model name
-        
+
     Returns:
         Response string from the model
     """
     try:
         logger.info(f"Sending prompt to DeepSeek model: {model}")
-        
+
         # Create chat completion
         response = client.chat.completions.create(
             model=model,
             messages=[{"role": "user", "content": text}],
             stream=False,
         )
-        
+
         # Extract response content
         return response.choices[0].message.content
     except Exception as e:
@@ -52,17 +51,17 @@ def prompt(text: str, model: str) -> str:
 def list_models() -> List[str]:
     """
     List available DeepSeek models.
-    
+
     Returns:
         List of model names
     """
     try:
         logger.info("Listing DeepSeek models")
         response = client.models.list()
-        
+
         # Extract model IDs
         models = [model.id for model in response.data]
-        
+
         return models
     except Exception as e:
         logger.error(f"Error listing DeepSeek models: {e}")
@@ -73,5 +72,5 @@ def list_models() -> List[str]:
             "deepseek-chat",
             "deepseek-reasoner",
             "deepseek-coder-v2",
-            "deepseek-reasoner-lite"
+            "deepseek-reasoner-lite",
         ]

@@ -3,7 +3,7 @@ Model router for dispatching requests to the appropriate provider.
 """
 
 import logging
-from typing import List, Dict, Any, Optional
+from typing import List
 import importlib
 from .utils import split_provider_and_model
 from .data_types import ModelProviders
@@ -29,7 +29,10 @@ class ModelRouter:
             Validated and potentially corrected model name
         """
         # Early return for our thinking token models to bypass validation
-        if "claude-3-7-sonnet-20250219" in model_name or "gemini-2.5-flash-preview-04-17" in model_name:
+        if (
+            "claude-3-7-sonnet-20250219" in model_name
+            or "gemini-2.5-flash-preview-04-17" in model_name
+        ):
             return model_name
 
         try:
@@ -183,7 +186,7 @@ Given a user-provided model name "{model}" for the provider "{provider}", and th
 return the closest matching model name from the available models list.
 Only return the exact model name, nothing else.
 
-Available models: {', '.join(available_models)}
+Available models: {", ".join(available_models)}
 """
             # Get correction from correction model
             corrected_model = correction_module.prompt(
