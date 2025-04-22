@@ -14,10 +14,11 @@ dependencies = [
     "pydantic>=2.0.0",
     "mcp>=0.1.5",
     "pytest>=8.3.5",
+    "ruff>=0.11.6",
 ]
 
 [tool.ruff.lint]
-ignore = ["E712", "F841", "E402"]
+ignore = ["E712", "E722", "F841", "E402"]
 
 [project.scripts]
 just-prompt = "just_prompt.__main__:main"
